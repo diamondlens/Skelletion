@@ -103,5 +103,33 @@ public class eye : MonoBehaviour
         print(new Vector3((target.transform.position.x - transform.position.x) / Mathf.Sqrt(Mathf.Pow((target.transform.position.x - transform.position.x), 2) + Mathf.Pow((target.transform.position.y - transform.position.y), 2)), (target.transform.position.y - transform.position.y) / Mathf.Sqrt(Mathf.Pow((target.transform.position.x - transform.position.x), 2) + Mathf.Pow((target.transform.position.y - transform.position.y), 2))));
         timer = 0;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Proj"))
+        {
+
+            health -= playerref.damage;
+            if (health <= 0)
+            {
+                if (miniboss == true)
+                {
+                    GameObject clone = Instantiate(soulseed, transform.position, Quaternion.identity);
+                    clone.SetActive(true);
+                    Destroy(gameObject);
+                    print(health);
+                }
+
+                GameObject clone1 = Instantiate(coin, transform.position, Quaternion.identity);
+                clone1.SetActive(true);
+                cont.current -= 1;
+                Destroy(gameObject);
+            }
+
+
+        }
+
+    }
 }
 ;

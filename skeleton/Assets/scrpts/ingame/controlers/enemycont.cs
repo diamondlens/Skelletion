@@ -5,11 +5,14 @@ using UnityEngine;
 public class Enemycontroller : MonoBehaviour
 {
     float time; 
+
     public GameObject ghost;
     public GameObject greaterghost;
     public GameObject roller;
     public GameObject missle;
     //public GameObject greatermissle;
+    public GameObject eye;
+    
     public float max;
     public int current;
     public GameObject player;
@@ -23,13 +26,17 @@ public class Enemycontroller : MonoBehaviour
     float maxtime = 1;
     float addtimer;
 
+    public float misssleremovetime;
+    bool missleremoved = false;
+
     public float ghostaddtime;
     bool ghostadded = false;
 
     public float rolleraddtime;
     bool rolleradded = false;
 
-
+    public float eyeaddtime;
+    bool eyeadded = false;
 
     float changetimer;
     public float changemax1;
@@ -62,6 +69,19 @@ public class Enemycontroller : MonoBehaviour
         {
             basicEpool.Add(ghost);
             ghostadded = true;
+        }
+
+        if (addtimer >= misssleremovetime && missleremoved == false)
+        {
+
+            basicEpool.Remove(missle);
+        }
+
+        if (addtimer >= eyeaddtime && eyeadded == false)
+        {
+            basicEpool.Add(eye);
+            eyeadded = true;
+
         }
 
         if (timer >= maxtime)

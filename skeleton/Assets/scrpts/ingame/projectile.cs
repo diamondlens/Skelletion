@@ -20,7 +20,7 @@ public class projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer = timer - Time.deltaTime;
+        xtimer = timer - Time.deltaTime;
 
         if (timer < 0)
         {
