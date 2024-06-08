@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class spitter : MonoBehaviour
+public class spit : MonoBehaviour
 {
 
 

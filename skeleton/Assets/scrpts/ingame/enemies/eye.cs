@@ -68,7 +68,6 @@ public class eye : MonoBehaviour
                 if (checkray.collider.gameObject == player)
                 {
                     shoot();
-                    print("hi");
                 }
             }
 
