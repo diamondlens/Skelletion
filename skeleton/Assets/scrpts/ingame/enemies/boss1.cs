@@ -49,7 +49,7 @@ public class boss1 : MonoBehaviour
         {
             if (checkray.collider.gameObject == player)
             {
-                print("hi(");
+                /print("hi(");
             }
         }
     }

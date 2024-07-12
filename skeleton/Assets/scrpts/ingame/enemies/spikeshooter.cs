@@ -1,18 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class spikeshooter : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject spawn1;
+    public GameObject spawn2;
+    public GameObject spawn3;
+    public GameObject spawn4;   
+    public GameObject spawn5;
+    public GameObject spawn6;
+    public GameObject spawn7;
+    public GameObject spawn8;
+
+    List<GameObject> spikeloc = new List<GameObject>();
+
+    public GameObject spike;
+    public float spikespeed; 
+
+
     void Start()
     {
-        
+        spikeloc.Add(spawn1);
+        /*spikeloc.Add(spawn2);
+        spikeloc.Add(spawn3);
+        spikeloc.Add(spawn4);
+        spikeloc.Add(spawn5);
+        spikeloc.Add(spawn6);
+        spikeloc.Add(spawn7);
+        spikeloc.Add(spawn8);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            activateset();
+        }
     }
+
+    void activateset()
+    {
+
+
+      GameObject spawnloc;
+    
+      spawnloc = spikeloc[Random.Range(0, spikeloc.Count)];
+
+        GameObject clone = Instantiate(spike, spawnloc.transform.position, spawnloc.transform.rotation);
+        clone.SetActive(true);
+
+        Rigidbody2D clonerb = clone.GetComponent<Rigidbody2D>();
+
+        //Quaternion rotato = Quaternion.AngleAxis(clone.transform.rotation, Vector3.up);
+
+        clonerb.AddForce(clone.transform.rotation * (new Vector3(spikespeed, 0, 0)));
+        clone.transform.rotation = Quaternion.Euler(clone.transform.rotation.x, clone.transform.rotation.y, spawnloc.transform.rotation.z - 90);
+
+
+
+    }
+
 }
