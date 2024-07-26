@@ -300,17 +300,22 @@ public class player : MonoBehaviour
         }
 
         noclimbray = Physics2D.Raycast(transform.position + Vector3.up * 2, Vector3.right, Mathf.Infinity, layer_mask);
-        if (noclimbray.collider.gameObject.CompareTag("Floor") && noclimbray.collider.gameObject == collision.gameObject)
-        {
-            climb = false;
+        if (noclimbray.collider != null)
+        { 
+            if (noclimbray.collider.gameObject.CompareTag("Floor") && noclimbray.collider.gameObject == collision.gameObject)
+            {
+                climb = false;
+            }
         }
 
         noclimbray2 = Physics2D.Raycast(transform.position + Vector3.up * 2, Vector3.left, Mathf.Infinity, layer_mask);
-        if (noclimbray2.collider.gameObject.CompareTag("Floor") && noclimbray2.collider.gameObject == collision.gameObject)
+        if (noclimbray2.collider != null)
         {
-            climb = false;
+            if (noclimbray2.collider.gameObject.CompareTag("Floor") && noclimbray2.collider.gameObject == collision.gameObject)
+            {
+                climb = false;
+            }
         }
-
         if (collision.gameObject.CompareTag("Floor"))
         {
             isGrounded = true;
