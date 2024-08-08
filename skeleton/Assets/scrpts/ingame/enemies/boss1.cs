@@ -108,7 +108,7 @@ public class boss1 : MonoBehaviour
             chargeready = true;
         }
 
-        if (health == maxhp / 2)
+        if (health <= maxhp / 2)
         {
             spiketimer -= Time.deltaTime;
             if (spiketimer <= 0)
