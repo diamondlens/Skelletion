@@ -316,6 +316,7 @@ public class player : MonoBehaviour
                 climb = false;
             }
         }
+
         if (collision.gameObject.CompareTag("Floor"))
         {
             isGrounded = true;

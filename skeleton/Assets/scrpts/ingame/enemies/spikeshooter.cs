@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 public class spikeshooter : MonoBehaviour
 {
+    
+
     public GameObject spawn1;
     public GameObject spawn2;
     public GameObject spawn3;
@@ -11,6 +14,7 @@ public class spikeshooter : MonoBehaviour
     public GameObject spawn6;
     public GameObject spawn7;
     public GameObject spawn8;
+    public GameObject spawn9;
 
     List<GameObject> spikeloc = new List<GameObject>();
 
@@ -27,23 +31,24 @@ public class spikeshooter : MonoBehaviour
         spikeloc.Add(spawn5);
         spikeloc.Add(spawn6);
         spikeloc.Add(spawn7);
-        spikeloc.Add(spawn8);
+        spikeloc.Add(spawn8);   
+        spikeloc.Add(spawn9);
     }
 
     // Up
     // date is called once per frame
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            activateset();
-            activateset();
-            activateset();
-        }
+    { 
+
+        
 
     }
+    
+    void Spikeping()
+    {
 
-    void activateset()
+    }
+    public void activateset()
     {
 
 
@@ -60,16 +65,10 @@ public class spikeshooter : MonoBehaviour
         
         clonerb.AddForce(clone.transform.rotation * (new Vector3(spikespeed, 0, 0)));
         
-        //clone.transform.rotation = Quaternion.Euler(clone.transform.rotation.x, clone.transform.rotation.y, spawnloc.transform.rotation.z * 180 / Mathf.PI  - 90);
+        //clone.transform.rotation  = Quaternion.Euler(clone.transform.rotation.x, clone.transform.rotation.y, spawnloc.transform.rotation.z * 180 / Mathf.PI  - 90);
         //print(spawnloc.transform.rotation.z * 180 / Mathf.PI - 90);
 
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Floor"))
-        {
-            Destroy(gameObject);
-        }
-    }
+    
 }

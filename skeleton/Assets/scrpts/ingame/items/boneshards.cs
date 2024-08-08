@@ -15,8 +15,7 @@ public class boneshards : MonoBehaviour
         playerGO = GameObject.FindWithTag("Player");
         playerscript = playerGO.GetComponent<player>();
 
-        print(playerGO);
-        print(playerscript);
+
 
         playerscript.dash.AddListener(Dashping);
         //playerscript.dash.AddListener(Dashping);

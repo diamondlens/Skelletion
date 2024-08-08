@@ -16497,6 +16497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2c0d38c70a3fe4eb54fbb2df80cd59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spikeshooter: {fileID: 1227931328}
   target: {fileID: 1466382603}
   player: {fileID: 1466382601}
   chargespeed: 15

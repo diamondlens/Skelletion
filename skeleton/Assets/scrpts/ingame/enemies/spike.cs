@@ -19,7 +19,7 @@ public class spike : MonoBehaviour
     void Update()
     {
         rb = GetComponent<Rigidbody2D>();
-        Quaternion rotato = Quaternion.Euler(0, 0, Mathf.Atan(rb.velocity.y / rb.velocity.x) * (180 / Mathf.PI) - 90);
+        Quaternion rotato = Quaternion.Euler(0, 0, Mathf.Atan(rb.velocity.y / rb.velocity.x) * (180 / Mathf.PI) - 90);  
 
         if (rb.velocity.x < 0)
         {
@@ -28,5 +28,11 @@ public class spike : MonoBehaviour
         transform.rotation = rotato;
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Floor"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
