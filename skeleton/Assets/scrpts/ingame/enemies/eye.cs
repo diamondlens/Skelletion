@@ -103,13 +103,20 @@ public class eye : MonoBehaviour
         timer = 0;
     }
 
+    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         if (collision.gameObject.CompareTag("Proj"))
         {
 
-            health -= playerref.damage;
+            dmgdealer pain;
+            pain = collision.gameObject.GetComponent<dmgdealer>();
+
+            health -= pain.damage;
+            pain.damage = 0;
+
             if (health <= 0)
             {
                 if (miniboss == true)

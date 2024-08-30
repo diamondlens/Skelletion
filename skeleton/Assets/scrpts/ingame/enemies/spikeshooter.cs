@@ -15,6 +15,7 @@ public class spikeshooter : MonoBehaviour
     public GameObject spawn7;
     public GameObject spawn8;
     public GameObject spawn9;
+    
 
     List<GameObject> spikeloc = new List<GameObject>();
 

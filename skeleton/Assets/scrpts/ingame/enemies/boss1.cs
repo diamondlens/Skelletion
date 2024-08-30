@@ -14,7 +14,9 @@ public class boss1 : MonoBehaviour
 
     private RaycastHit2D checkray;
     public GameObject player;
-    public player playerref;    
+    public player playerref;
+
+    public boss bosscont;
 
     public float maxhp;
     float health;
@@ -31,7 +33,7 @@ public class boss1 : MonoBehaviour
     float chargecdtimer;
     bool chargeready;
 
-
+    
     void Start()
     {
         health = maxhp;
@@ -44,10 +46,7 @@ public class boss1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            spikes();
-        }
+        
 
         agent.SetDestination(target.position);
 
@@ -74,11 +73,12 @@ public class boss1 : MonoBehaviour
         checkray = Physics2D.Raycast(transform.position, toplayer, 30, ~layer_mask);
         if (checkray.collider != null)
         {
-            if (chargeready = true && checkray.collider.gameObject == player)
+            if (chargeready == true && checkray.collider.gameObject == player)
             {
                 //print("hi(");
                 agent.speed = chargespeed;
                 chargetimer = chargetime;
+                chargecdtimer = chargecd;
                 chargeding = true;
                 chargeready = false;
             }
@@ -100,7 +100,7 @@ public class boss1 : MonoBehaviour
         {
             agent.speed = basespeed;
             chargeding = false;
-            chargecdtimer = chargecd;
+            
         }
 
         if (chargeready == false && chargecdtimer <= 0)
@@ -133,6 +133,11 @@ public class boss1 : MonoBehaviour
         {
 
             health -= playerref.damage;
+            if (health <= 0)
+            {
+                bosscont.endfight();
+                Destroy(gameObject);
+            }
         }
 
     }

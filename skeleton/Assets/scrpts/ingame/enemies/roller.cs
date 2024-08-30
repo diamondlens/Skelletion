@@ -51,7 +51,11 @@ public class roller : MonoBehaviour
         if (collision.gameObject.CompareTag("Proj"))
         {
 
-            health -= playerref.damage;
+            dmgdealer pain;
+            pain = collision.gameObject.GetComponent<dmgdealer>();
+
+            health -= pain.damage;
+            pain.damage = 0;
             if (health <= 0)
             {
                 if (miniboss == true)

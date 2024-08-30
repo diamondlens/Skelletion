@@ -58,7 +58,13 @@ public class missle : MonoBehaviour
         if (collision.gameObject.CompareTag("Proj"))
         {
 
-            health -= playerref.damage;
+            dmgdealer pain;
+            pain = collision.gameObject.GetComponent<dmgdealer>();
+
+            health -= pain.damage;
+            print(health);
+            pain.damage = 0;
+
             if (health <= 0)
             {
                 if (miniboss == true)

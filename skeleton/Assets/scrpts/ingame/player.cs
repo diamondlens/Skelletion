@@ -13,6 +13,8 @@ public class player : MonoBehaviour
     public float speed;
     public float jumpForce;
 
+    public itemcont itemcont;
+
     int level = 0;
     float XPness;
     float XP;
@@ -342,7 +344,6 @@ public class player : MonoBehaviour
                 rb.velocity = new Vector2(0, 0);
                 loss.SetActive(true);
             }
-        
         }
     }
 
@@ -380,6 +381,11 @@ public class player : MonoBehaviour
             levelpause = true;
             XPness = levelcalc(level);
             XP = 0;
+        }
+
+        if (collision.gameObject.CompareTag("chest"))
+        {
+            itemcont.begin();
         }
     }
 

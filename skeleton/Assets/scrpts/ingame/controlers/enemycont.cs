@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemycontroller : MonoBehaviour
 {
-    float time; 
+    float time;
 
     public GameObject ghost;
     public GameObject greaterghost;
@@ -12,7 +12,7 @@ public class Enemycontroller : MonoBehaviour
     public GameObject missle;
     //public GameObject greatermissle;
     public GameObject eye;
-    
+
     public float max;
     public int current;
     public GameObject player;
@@ -40,7 +40,12 @@ public class Enemycontroller : MonoBehaviour
 
     float changetimer;
     public float changemax1;
-    bool changemaxcheck = false ;
+    bool changemaxcheck = false;
+
+    bool bossfight;
+    public float boss1time;
+
+
 
     List<GameObject> basicEpool = new List<GameObject>();
 
@@ -58,6 +63,7 @@ public class Enemycontroller : MonoBehaviour
         timer += Time.deltaTime;
         addtimer += Time.deltaTime;
         changetimer += Time.deltaTime;
+        minibosscurrent += Time.deltaTime;
 
         if (addtimer >= rolleraddtime && rolleradded == false)
         {
@@ -89,13 +95,14 @@ public class Enemycontroller : MonoBehaviour
             onTimerTimeOut();
         }
 
+
         if (changetimer >= changemax1 && changemaxcheck == false)
         {
             max = 20;
-            maxtime = 1/2;
+            maxtime = 1 / 2;
         }
 
-        minibosscurrent += Time.deltaTime;
+
 
         if (minibosscurrent >= minibosstimer)
         {
@@ -119,14 +126,16 @@ public class Enemycontroller : MonoBehaviour
         {
             theta = Random.Range(0f, 360f) * 180 / Mathf.PI;
             spawnpos = new Vector3(player.transform.position.x + rad * Mathf.Sin(theta), player.transform.position.y + rad * Mathf.Cos(theta), 0f);
-            GameObject clone = Instantiate( chooseETS(), spawnpos, Quaternion.identity);    
+            GameObject clone = Instantiate(chooseETS(), spawnpos, Quaternion.identity);
             clone.SetActive(true);
             current += 1;
         }
     }
 
-        GameObject chooseETS()
+    GameObject chooseETS()
     {
         return basicEpool[Random.Range(0, basicEpool.Count)];
     }
+
+    
 }
