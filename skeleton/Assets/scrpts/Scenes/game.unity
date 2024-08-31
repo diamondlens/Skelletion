@@ -29498,6 +29498,7 @@ MonoBehaviour:
   nochoice2: {fileID: 654617878}
   nochoice3: {fileID: 1852597090}
   boneshards: {fileID: 1719151534}
+  boneshardsgo: {fileID: 1072191583}
   hellsdecent: {fileID: 441554339}
 --- !u!1 &1564925560
 GameObject:
@@ -33360,7 +33361,7 @@ GameObject:
   - component: {fileID: 1719151537}
   - component: {fileID: 1719151536}
   m_Layer: 5
-  m_Name: bone shards
+  m_Name: boneshardsbut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33429,9 +33430,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2048430215}
-        m_TargetAssemblyTypeName: levelcont, Assembly-CSharp
-        m_MethodName: Lp
+      - m_Target: {fileID: 1562333194}
+        m_TargetAssemblyTypeName: itemcont, Assembly-CSharp
+        m_MethodName: boneshardsbut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

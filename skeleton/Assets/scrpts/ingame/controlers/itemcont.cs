@@ -6,22 +6,19 @@ public class itemcont : MonoBehaviour
 {
 
     public player playerref;
-    bool ding = false;
 
     float av;
     float avmax;
 
-     float cmax;
+    float cmax;
     float cav;
-     float rmax;
+    float rmax;
     float rav;
-     float emax;
+    float emax;
     float eav;
-     float lmax;
+    float lmax;
     float lav;
 
-    float choicesmax = 3;
-    float choicesleft;
 
     float raritypick;
     List<GameObject> cpool = new List<GameObject>();
@@ -38,6 +35,7 @@ public class itemcont : MonoBehaviour
     public GameObject nochoice3;
 
     public GameObject boneshards;
+    public GameObject boneshardsgo;
     public GameObject hellsdecent;
     // Start is called before the first frame update
     void Start()
@@ -145,7 +143,7 @@ public class itemcont : MonoBehaviour
                 }
                 cav -= 1;
             }
-            if (raritypick > 11 && raritypick <= 16 && rav > 0)
+            if (raritypick > 11 && raritypick <= 16)
             {
                 //rare (30%)
                 if (rav > 0)
@@ -154,7 +152,7 @@ public class itemcont : MonoBehaviour
                 }
                 rav -= 1;
             }
-            if (raritypick > 16 && raritypick <= 19 && eav > 0)
+            if (raritypick > 16 && raritypick <= 19)
             {
                 //epic (10%)
                 if (eav > 0)
@@ -163,7 +161,7 @@ public class itemcont : MonoBehaviour
                 }
                 eav -= 1;
             }
-            if (raritypick > 19 && lav > 0)
+            if (raritypick > 19)
             {
                 //legendary (5) 
                 if (lav > 0)
@@ -230,7 +228,7 @@ public class itemcont : MonoBehaviour
                 }
                 cav -= 1;
             }
-            if (raritypick > 11 && raritypick <= 16 && rav > 0)
+            if (raritypick > 11 && raritypick <= 16)
             {
                 //rare (30%)
                 if (rav > 0)
@@ -239,7 +237,7 @@ public class itemcont : MonoBehaviour
                 }
                 rav -= 1;
             }
-            if (raritypick > 16 && raritypick <= 19 && eav > 0)
+            if (raritypick > 16 && raritypick <= 19)
             {
                 //epic (10%)
                 if (eav > 0)
@@ -248,7 +246,7 @@ public class itemcont : MonoBehaviour
                 }
                 eav -= 1;
             }
-            if (raritypick > 19 && lav > 0)
+            if (raritypick > 19)
             {
                 //legendary (5) 
                 if (lav > 0)
@@ -310,7 +308,13 @@ public class itemcont : MonoBehaviour
         return cpool[Random.Range(0, lpool.Count)];
     }
 
-    private void Reset()
+    public void boneshardsbut()
+    {
+        boneshardsgo.SetActive(true);
+        rpool.Remove(boneshards);
+        buttonpressed();
+    }
+    private void reset()
     {
         cmax = cpool.Count;
         rmax = rpool.Count;
@@ -320,5 +324,14 @@ public class itemcont : MonoBehaviour
         avmax = cmax + rmax + emax + lmax;
         av = avmax;
         rav = rmax;
+    }
+
+    void buttonpressed()
+    {
+        reset();
+        Time.timeScale = 1f;
+        onepick.SetActive(false);
+        twopick.SetActive(false);
+        threepick.SetActive(false);
     }
 }
