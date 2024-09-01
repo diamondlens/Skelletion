@@ -61,7 +61,16 @@ public class missle : MonoBehaviour
             dmgdealer pain;
             pain = collision.gameObject.GetComponent<dmgdealer>();
 
-            health -= pain.damage;
+            float critroll;
+            critroll = Random.Range(1, 100);
+            if (critroll > playerref.cc)
+            {
+                health -= pain.damage;
+            }
+            if (critroll <= playerref.cc)
+            {
+                health -= pain.damage * playerref.cd;
+            }
             pain.damage = 0;
 
             if (health <= 0)

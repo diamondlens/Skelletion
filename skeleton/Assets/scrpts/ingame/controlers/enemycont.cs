@@ -9,6 +9,7 @@ public class Enemycontroller : MonoBehaviour
     public GameObject ghost;
     public GameObject greaterghost;
     public GameObject roller;
+    public GameObject greaterroller;
     public GameObject missle;
     //public GameObject greatermissle;
     public GameObject eye;
@@ -48,6 +49,7 @@ public class Enemycontroller : MonoBehaviour
 
 
     List<GameObject> basicEpool = new List<GameObject>();
+    List<GameObject> wraithpool = new List<GameObject>();
 
     // Start is called before the first frame update
     // Start is called before the first frame update
@@ -55,6 +57,9 @@ public class Enemycontroller : MonoBehaviour
     {
         basicEpool.Add(missle);
         //basicEpool.Remove(0)
+
+        wraithpool.Add(greaterghost);
+        wraithpool.Add(greaterroller);
     }
 
     // Update is called once per frame
@@ -108,7 +113,7 @@ public class Enemycontroller : MonoBehaviour
         {
             theta = Random.Range(0f, 360f) * 180 / Mathf.PI;
             spawnpos = new Vector3(player.transform.position.x + rad * Mathf.Sin(theta), player.transform.position.y + rad * Mathf.Cos(theta), 0f);
-            GameObject clone = Instantiate(greaterghost, spawnpos, Quaternion.identity);
+            GameObject clone = Instantiate(chooseWTS(), spawnpos, Quaternion.identity);
             clone.SetActive(true);
             minibosscurrent = -100000;
         }
@@ -137,5 +142,8 @@ public class Enemycontroller : MonoBehaviour
         return basicEpool[Random.Range(0, basicEpool.Count)];
     }
 
-    
+    GameObject chooseWTS()
+    {
+        return wraithpool [Random.Range(0, basicEpool.Count)];
+    }
 }

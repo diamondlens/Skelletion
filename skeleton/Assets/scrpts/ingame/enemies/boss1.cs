@@ -131,8 +131,21 @@ public class boss1 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Proj"))
         {
+            dmgdealer pain;
+            pain = collision.gameObject.GetComponent<dmgdealer>();
 
-            health -= playerref.damage;
+            float critroll;
+            critroll = Random.Range(1, 100);
+            if (critroll > playerref.cc)
+            {
+                health -= pain.damage;
+            }
+            if (critroll <= playerref.cc)
+            {
+                health -= pain.damage * playerref.cd;
+            }
+            pain.damage = 0;
+
             if (health <= 0)
             {
                 bosscont.endfight();
