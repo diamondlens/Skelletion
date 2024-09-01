@@ -62,7 +62,6 @@ public class missle : MonoBehaviour
             pain = collision.gameObject.GetComponent<dmgdealer>();
 
             health -= pain.damage;
-            print(health);
             pain.damage = 0;
 
             if (health <= 0)

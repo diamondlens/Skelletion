@@ -22,6 +22,9 @@ public class levelcont : MonoBehaviour
     bool scheck = false;
     bool pcheck = false;
     bool ccheck = false;
+    bool cdcheck = false;
+    bool rcheck = false;
+    bool hcheck = false;
 
     float choicesmax = 3;
     float choicesleft;
@@ -57,6 +60,16 @@ public class levelcont : MonoBehaviour
     //crit
     public GameObject cc;
     public GameObject rc;
+    //critdmg
+    public GameObject rcd;
+    public GameObject ecd;
+    public GameObject lcd;
+    //soulregen 
+    public GameObject cr;
+    public GameObject rr;
+    //health
+    public GameObject rh;
+    public GameObject eh;
 
     // Start is called before the first frame update
     void Start()
@@ -67,20 +80,27 @@ public class levelcont : MonoBehaviour
         cpool.Add(cd);
         cpool.Add(cj);
         cpool.Add(cc);
+        cpool.Add(cr);
 
         rpool.Add(ras);
         rpool.Add(rd);
         rpool.Add(rj);
         rpool.Add(rs);
         rpool.Add(rc);
+        rpool.Add(rcd);
+        rpool.Add(rr);
+        rpool.Add(rh);
 
         epool.Add(eas);
         epool.Add(ed);
         epool.Add(es);
+        epool.Add(ecd);
+        epool.Add(eh);
 
         lpool.Add(las);
         lpool.Add(ld);
         lpool.Add(lp);
+        lpool.Add(lcd);
     }
 
     // Update is called once per frame
@@ -342,11 +362,60 @@ public class levelcont : MonoBehaviour
             ccheck = true;
             return true;
         }
+
+        //critdmg
+        if (check == rcd && cdcheck == false)
+        {
+            cav -= 1;
+            cdcheck = true;
+            return true;
+        }
+        if (check == ecd && cdcheck == false)
+        {
+            rav -= 1;
+            cdcheck = true;
+            return true;
+        }
+        if (check == lcd && cdcheck == false)
+        {
+            rav -= 1;
+            cdcheck = true;
+            return true;
+        }
+
+        //soul regen
+        if (check == cr && rcheck == false)
+        {
+            cav -= 1;
+            rcheck = true;
+            return true;
+        }
+        if (check == rr && rcheck == false)
+        {
+            rav -= 1;
+            rcheck = true;
+            return true;
+        }
+
+        //health
+        if (check == rh && hcheck == false)
+        {
+            cav -= 1;
+            hcheck = true;
+            return true;
+        }
+        if (check == eh && hcheck == false)
+        {
+            rav -= 1;
+            hcheck = true;
+            return true;
+        }
+
         return false;
 
     }
 
-    //attackspeed 
+    //attack speed 
     public void Cas()
     {
         playerref.firerate += 0.1f;
@@ -421,7 +490,7 @@ public class levelcont : MonoBehaviour
         buttonpressed();
     }
 
-    //critchangce
+    //crit chance
     public void Cc()
     {
         playerref.cc += 3;
@@ -432,6 +501,54 @@ public class levelcont : MonoBehaviour
         playerref.cc += 7;
         buttonpressed();
     }
+
+    //crit damage
+    public void Rcd()
+    {
+        playerref.cd += 50;
+        buttonpressed();
+    }
+    public void Ecd()
+    {
+        playerref.cd += 100;
+        buttonpressed();
+    }
+
+    public void Lcd()
+    {
+        playerref.cd += 200;
+        buttonpressed();
+    }
+
+    //soul regen
+    public void Cr()
+    {
+        playerref.soulgain += 5;
+        buttonpressed();
+    }
+    public void Rr()
+    {
+        playerref.cc += 7;
+        buttonpressed();
+    }
+
+    //health
+    public void Rh()
+    {
+        playerref.maxhealth += 1;
+        playerref.health += 1;
+        playerref.hp.SetText(playerref.health.ToString() + "/" + playerref.maxhealth.ToString());
+        buttonpressed();
+    }
+    public void Eh()
+    {
+        playerref.maxhealth += 2;
+        playerref.health += 2;
+        playerref.hp.SetText(playerref.health.ToString() + "/" + playerref.maxhealth.ToString());
+        buttonpressed();
+    }
+
+
     void reset()
     {
         choicesleft = choicesmax;
@@ -446,9 +563,12 @@ public class levelcont : MonoBehaviour
         scheck = false;
         pcheck = false;
         ccheck = false;
+        cdcheck = false;
+        rcheck = false;
+        hcheck = false;
     }
 
-    
+
 
     void buttonpressed()
     {

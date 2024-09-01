@@ -21,16 +21,17 @@ public class player : MonoBehaviour
     public bool levelpause = false;
 
     public float maxhealth;
-    float health;
+    public float health;
     public float invertime;
     float invertimer;
     public TMP_Text hp;
 
 
     public float damage;
-    public float cc = 5;
     public float projectilespeed;
     public int projpierce;
+    public float cc = 5;
+    public float cd = 200;
 
     public float dashforce;
     public float dashtime;

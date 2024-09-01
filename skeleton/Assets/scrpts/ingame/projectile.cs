@@ -48,7 +48,6 @@ public class projectile : dmgdealer
         if (collision.gameObject.CompareTag("Enemy"))
         { 
         damage = playerref.damage;
-        print(damage);
         }
     }
 
