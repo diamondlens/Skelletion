@@ -1,40 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Text;
-using Unity.VisualScripting;
+using System.Drawing;
 using UnityEngine;
 
-public class ghosts : enemybase
+public class enemybase : MonoBehaviour
 {
 
-
-
-    public float speed;
-
-
-    //pubuic En
+    public GameObject player;
+    public float health;
+    protected Rigidbody2D m_Rigidbody;
+    public player playerref;
+    public bool miniboss = false;
+    public Enemycontroller cont;
+    public GameObject coin;
+    public GameObject soulseed;
+    protected bool coinspawned = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // m_Rigidbody.AddForce((new Vector3((player.transform.position.x - transform.position.x) / Mathf.Sqrt(Mathf.Pow((player.transform.position.x - transform.position.x), 2) + Mathf.Pow((player.transform.position.y - transform.position.y), 2)), (player.transform.position.y - transform.position.y) / Mathf.Sqrt(Mathf.Pow((player.transform.position.x - transform.position.x), 2) + Mathf.Pow((player.transform.position.y - transform.position.y), 2)))) * speed * Time.deltaTime, ForceMode2D.Impulse);
-
-        m_Rigidbody.velocity = new Vector2((player.transform.position.x - transform.position.x) / Mathf.Sqrt(Mathf.Pow((player.transform.position.x - transform.position.x), 2) + Mathf.Pow((player.transform.position.y - transform.position.y), 2)) * speed, (player.transform.position.y - transform.position.y) / Mathf.Sqrt(Mathf.Pow((player.transform.position.x - transform.position.x), 2) + Mathf.Pow((player.transform.position.y - transform.position.y), 2)) * speed);
+        
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
 
-
-       private void OnTriggerEnter2D(Collider2D collision)
-       {
-
-           if (collision.gameObject.CompareTag("Proj"))
-           {
+        if (collision.gameObject.CompareTag("Proj"))
+        {
 
             dmgdealer pain;
             pain = collision.gameObject.GetComponent<dmgdealer>();
@@ -63,6 +61,7 @@ public class ghosts : enemybase
                         coinspawned = true;
                     }
                     Destroy(gameObject);
+                    print(health);
                 }
                 if (coinspawned == false)
                 {
@@ -74,8 +73,8 @@ public class ghosts : enemybase
                 Destroy(gameObject);
             }
 
-           }
 
-       }
+        }
 
+    }
 }

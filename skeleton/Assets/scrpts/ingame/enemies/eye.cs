@@ -2,24 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class eye : MonoBehaviour
+public class eye : enemybase
 {
 
     [SerializeField] Transform target;
 
     UnityEngine.AI.NavMeshAgent agent;
 
-    public float health;
-    public player playerref;
-    public bool miniboss = false;
-    public Enemycontroller cont;
-    public GameObject coin;
-    public GameObject soulseed;
+
     float timer = 0;
     public float spitcd;
     public GameObject spit;
     private RaycastHit2D checkray;
-    public GameObject player;
     public float projectilespeed;
     public GameObject projectile;
 
@@ -62,7 +56,7 @@ public class eye : MonoBehaviour
             LayerMask layer_mask = LayerMask.GetMask("enemy");
             //spit animiation
             toplayer = new Vector3((player.transform.position.x - transform.position.x), (player.transform.position.y - transform.position.y), 0);
-            checkray = Physics2D.Raycast(transform.position, toplayer, 30, ~layer_mask);
+            checkray = Physics2D.Raycast(transform.position, toplayer, 25, ~layer_mask);
             if (checkray.collider != null) 
             {
                 if (checkray.collider.gameObject == player)
@@ -105,46 +99,5 @@ public class eye : MonoBehaviour
 
     
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        if (collision.gameObject.CompareTag("Proj"))
-        {
-
-            dmgdealer pain;
-            pain = collision.gameObject.GetComponent<dmgdealer>();
-
-            float critroll;
-            critroll = Random.Range(1, 100);
-            if (critroll > playerref.cc)
-            {
-                health -= pain.damage;
-            }
-            if (critroll <= playerref.cc)
-            {
-                health -= pain.damage * playerref.cd;
-            }
-            pain.damage = 0;
-
-            if (health <= 0)
-            {
-                if (miniboss == true)
-                {
-                    GameObject clone = Instantiate(soulseed, transform.position, Quaternion.identity);
-                    clone.SetActive(true);
-                    Destroy(gameObject);
-                    print(health);
-                }
-
-                GameObject clone1 = Instantiate(coin, transform.position, Quaternion.identity);
-                clone1.SetActive(true);
-                cont.current -= 1;
-                Destroy(gameObject);
-            }
-
-
-        }
-
-    }
 }
 ;

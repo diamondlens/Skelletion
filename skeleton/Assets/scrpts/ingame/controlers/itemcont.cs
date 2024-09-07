@@ -19,6 +19,8 @@ public class itemcont : MonoBehaviour
     float lmax;
     float lav;
 
+    public GameObject backround;
+
 
     float raritypick;
     List<GameObject> cpool = new List<GameObject>();
@@ -34,16 +36,35 @@ public class itemcont : MonoBehaviour
     public GameObject nochoice2;
     public GameObject nochoice3;
 
+    // right clicks
+    public GameObject reaperstime;
+    public GameObject reaperstimego;
+
+    // dash
     public GameObject boneshards;
     public GameObject boneshardsgo;
+
     public GameObject hellsdecent;
+
+
+    //general
+    public GameObject swiftbolts;
+
+    public GameObject largerbolts;
+
+    public GameObject ghostlycalves;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        cpool.Add(swiftbolts);
+        cpool.Add(largerbolts);
 
         rpool.Add(boneshards);
-        rpool.Add(hellsdecent);
+        //rpool.Add(hellsdecent);
+        rpool.Add(ghostlycalves);
+
+        lpool.Add(reaperstime);
 
         cmax = cpool.Count;
         rmax = rpool.Count;
@@ -52,7 +73,10 @@ public class itemcont : MonoBehaviour
 
         avmax = cmax + rmax + emax + lmax;
         av = avmax;
+        cav = cmax;
         rav = rmax;
+        eav = emax;
+        lav = lmax;
     }
 
     // Update is called once per frame
@@ -63,6 +87,7 @@ public class itemcont : MonoBehaviour
     public void begin()
     {
         Time.timeScale = 0f;
+        backround.SetActive(true);
         upgradepick1();
     }
 
@@ -72,13 +97,13 @@ public class itemcont : MonoBehaviour
         {
             onepick = nochoice1;
             onepick.SetActive(true);
-            onepick.transform.localPosition = new Vector3(-200, 0, 0);
+            onepick.transform.localPosition = new Vector3(-200, -30, 0);
             upgradepick2();
         }
         if (av > 0)
         {
 
-            raritypick = Random.Range(1, 20);
+            raritypick = Random.Range(1, 21);
 
             if (raritypick <= 11 && cav > 0)
             {
@@ -109,7 +134,7 @@ public class itemcont : MonoBehaviour
             if (onepick != null)
             {
                 onepick.SetActive(true);
-                onepick.transform.localPosition = new Vector3(-200, 0, 0);
+                onepick.transform.localPosition = new Vector3(-200, -30, 0);
                 av -= 1;
                 upgradepick2();
             }
@@ -127,12 +152,12 @@ public class itemcont : MonoBehaviour
         {
             twopick = nochoice2;
             twopick.SetActive(true);
-            twopick.transform.localPosition = new Vector3(0, 0, 0);
+            twopick.transform.localPosition = new Vector3(0, -30, 0);
             upgradepick3();
         }
         if (av > 0)
         {
-            raritypick = Random.Range(1, 20);
+            raritypick = Random.Range(1, 21);
 
             if (raritypick <= 11)
             {
@@ -176,7 +201,7 @@ public class itemcont : MonoBehaviour
                 if (twopick != null)
                 {
                     twopick.SetActive(true);
-                    twopick.transform.localPosition = new Vector3(0, 0, 0);
+                    twopick.transform.localPosition = new Vector3(0, -30, 0);
                     av -= 1;
                     upgradepick3();
                 }
@@ -206,18 +231,18 @@ public class itemcont : MonoBehaviour
         }
     }
 
-    void upgradepick3()
+        void upgradepick3()
     {
         if (av <= 0)
         {
             threepick = nochoice3;
             threepick.SetActive(true);
-            threepick.transform.localPosition = new Vector3(200, 0, 0);
+            threepick.transform.localPosition = new Vector3(200, -30, 0);
         }
 
         if (av > 0)
         {
-            raritypick = Random.Range(1, 20);
+            raritypick = Random.Range(1, 21);
 
             if (raritypick <= 11)
             {
@@ -261,7 +286,7 @@ public class itemcont : MonoBehaviour
                 if (threepick != null)
                 {
                     threepick.SetActive(true);
-                    threepick.transform.localPosition = new Vector3(200, 0, 0);
+                    threepick.transform.localPosition = new Vector3(200, -30, 0);
                     av -= 1;
                 }
             }
@@ -305,16 +330,61 @@ public class itemcont : MonoBehaviour
     }
     GameObject Lpick()
     {
-        return cpool[Random.Range(0, lpool.Count)];
+        return lpool[Random.Range(0, lpool.Count)];
+    }
+    //rightclick
+    public void reaperstimebut()
+    {
+        reaperstimego.SetActive(true);
+        removerights();
+        buttonpressed();
     }
 
+    //dash
     public void boneshardsbut()
     {
         boneshardsgo.SetActive(true);
         rpool.Remove(boneshards);
         buttonpressed();
     }
-    private void reset()
+
+
+    //general
+    public void swiftboltsbut()
+    {
+        playerref.fireratemod += 40;
+        playerref.damagemod -= 10;
+        cpool.Remove(swiftbolts);
+        buttonpressed();
+    }
+
+    public void largerboltsbut()
+    {
+        playerref.damagemod += 40;
+        playerref.fireratemod -= 10;
+        cpool.Remove(largerbolts);
+        buttonpressed();
+    }
+
+    public void ghostlycalvesbut()
+    {
+        playerref.speedmod += 25;
+        playerref.jumpmod += 10;
+        rpool.Remove(ghostlycalves);
+        buttonpressed();
+    }
+    public void Rd()
+    {
+        playerref.damage += 15;
+        buttonpressed();
+    }
+
+    private void removerights()
+    {
+        lpool.Remove(reaperstime);
+    }
+
+    void reset()
     {
         cmax = cpool.Count;
         rmax = rpool.Count;
@@ -323,15 +393,24 @@ public class itemcont : MonoBehaviour
 
         avmax = cmax + rmax + emax + lmax;
         av = avmax;
+        cav = cmax;
         rav = rmax;
+        eav = emax;
+        lav = lmax;
+
+        onepick = null;
+        twopick = null;
+        threepick = null;
     }
 
-    void buttonpressed()
+    private void buttonpressed()
     {
-        reset();
         Time.timeScale = 1f;
         onepick.SetActive(false);
         twopick.SetActive(false);
         threepick.SetActive(false);
+        playerref.Resetstats();
+        reset();
+        backround.SetActive(false);
     }
 }

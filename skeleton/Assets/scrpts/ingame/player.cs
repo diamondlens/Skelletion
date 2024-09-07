@@ -4,14 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using System.Drawing.Drawing2D;
 
 public class player : MonoBehaviour
 {
-    public reaperstime reaperstime;
     public UnityEvent dash;
+    public UnityEvent rightclick;
 
-    public float speed;
-    public float jumpForce;
+    float speed;
+    public float speedbase;
+    public float speedmod = 100;
+    float jumpForce;
+    public float jumpbase;
+    public float jumpmod = 100;
 
     public itemcont itemcont;
 
@@ -28,13 +33,17 @@ public class player : MonoBehaviour
 
 
     public float damage;
+    public float damagebase;
+    public float damagemod = 100;
     public float projectilespeed;
     public int projpierce;
     public float cc = 5;
     public float cd = 200;
 
+    public float dashcost;
     public float dashforce;
     public float dashtime;
+    float dashdirection;
     float timer;
 
     float originalgrav;
@@ -46,7 +55,8 @@ public class player : MonoBehaviour
 
     private RaycastHit2D climbray;
     private bool climb = false;
-    public float climbspeed;
+    float climbspeed;
+    public float climbspeedbase;
     private RaycastHit2D noclimbray;
     private RaycastHit2D noclimbray2;
     bool ding = false;
@@ -56,7 +66,9 @@ public class player : MonoBehaviour
 
 
     float shootcd;
-    public float firerate;
+    float firerate;
+    public float fireratebase;
+    public float fireratemod = 100;
 
     public GameObject projectile;
     private Vector3 mousepos;
@@ -64,8 +76,9 @@ public class player : MonoBehaviour
     public float soul;
     public float maxsoul;
     public GameObject bar;
-    public float soulgain;
-    public float dashcost;
+    float soulgain;
+    public float soulgainbase;
+    public float soulgainmod = 100;
 
     public GameObject loss;
     public TMP_Text scoreT;
@@ -87,15 +100,14 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-
+        Resetstats();
 
         rb = GetComponent<Rigidbody2D>();
         //TextMeshPro hp = GetComponent<health>();
         originalgrav = rb.gravityScale;
         bc = GetComponent<BoxCollider2D>();
         health = maxhealth;
-        hp.text = health.ToString() + "/" +maxhealth.ToString();
+        hp.text = health.ToString() + "/" + maxhealth.ToString();
 
         XPness = levelcalc(level);
 
@@ -109,12 +121,12 @@ public class player : MonoBehaviour
     {
 
         localplayertime = Time.deltaTime;
-        if ( Time.timeScale > 0 )
+        if (Time.timeScale > 0)
         {
             localplayertime = Time.deltaTime / Time.timeScale;
         }
-        
-      
+
+
 
         //movement
         inputX = Input.GetAxis("Horizontal");
@@ -143,17 +155,18 @@ public class player : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 rb.velocity = dashforce * speed / 10f * Vector2.up;
-
+                dashdirection = 1;
                 Gravity();
                 //if (dash != null)
                 //{
-                    dash.Invoke();
+                dash.Invoke();
                 //}
 
             }
             if (Input.GetKey(KeyCode.A))
             {
                 rb.velocity = dashforce * speed / 10f * Vector2.left;
+                dashdirection = 4;
                 Gravity();
                 if (dash != null)
                 {
@@ -163,6 +176,7 @@ public class player : MonoBehaviour
             if (Input.GetKey(KeyCode.S))
             {
                 rb.velocity = dashforce * speed / 10f * Vector2.down;
+                dashdirection = 3;
                 Gravity();
                 if (dash != null)
                 {
@@ -172,10 +186,7 @@ public class player : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 rb.velocity = dashforce * speed / 10f * Vector2.right;
-                //if (Time.timeScale < 1 && Time.timeScale > 0)
-                //{
-                //    rb.velocity = dashforce * speed / 20f * Vector2.right;
-                //}
+                dashdirection = 2;
                 Gravity();
                 if (dash != null)
                 {
@@ -186,7 +197,7 @@ public class player : MonoBehaviour
         if (tangible == false)
         {
             timer -= Time.deltaTime;
-            invertimer = 0.3f;
+            invertimer = 0.7f;
             if (timer < 0.005)
             {
                 // bc.enabled = true;
@@ -196,7 +207,7 @@ public class player : MonoBehaviour
             if (timer < 0)
             {
                 tangible = true;
-                rb.gravityScale = originalgrav; 
+                rb.gravityScale = originalgrav;
             }
         }
 
@@ -205,14 +216,14 @@ public class player : MonoBehaviour
             if (shootcd < 0 && tangible == true)
             {
                 shoot();
-                
+
             }
         }
 
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            rightping = true;
+            rightclick.Invoke();
         }
 
 
@@ -232,19 +243,19 @@ public class player : MonoBehaviour
             ding = false;
         }
 
-         
+
 
 
         //                                                 ~soul~
         if (soul <= maxsoul)
         {
-            soul += soulgain * localplayertime;
+            soul += soulgain * Time.deltaTime;
             if (soul > maxsoul)
             {
                 soul = maxsoul;
             }
         }
-        
+
 
     }
 
@@ -254,11 +265,11 @@ public class player : MonoBehaviour
 
         Quaternion spawnRotation = Quaternion.Euler(0, 0, Mathf.Atan(((mousepos.y - transform.position.y) / Mathf.Sqrt(Mathf.Pow((mousepos.x - transform.position.x), 2) + Mathf.Pow((mousepos.y - transform.position.y), 2))) / ((mousepos.x - transform.position.x) / Mathf.Sqrt(Mathf.Pow((mousepos.x - transform.position.x), 2) + Mathf.Pow((mousepos.y - transform.position.y), 2)))) * (180 / Mathf.PI));
 
-        
+
 
 
         if ((mousepos.x - transform.position.x) < 0)
-        {
+        {   
             spawnRotation = Quaternion.Euler(0, 0, Mathf.Atan(((mousepos.y - transform.position.y) / Mathf.Sqrt(Mathf.Pow((mousepos.x - transform.position.x), 2) + Mathf.Pow((mousepos.y - transform.position.y), 2))) / ((mousepos.x - transform.position.x) / Mathf.Sqrt(Mathf.Pow((mousepos.x - transform.position.x), 2) + Mathf.Pow((mousepos.y - transform.position.y), 2)))) * (180 / Mathf.PI) + 180);
         }
 
@@ -281,7 +292,7 @@ public class player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(0, 3, true);
         soul -= dashcost;
         climb = false;
-        
+
     }
 
     void FixedUpdate()
@@ -289,7 +300,7 @@ public class player : MonoBehaviour
         if (tangible)
         {
             rb.velocity = new Vector2(inputX * speed, rb.velocity.y);
- 
+
         }
     }
 
@@ -304,7 +315,7 @@ public class player : MonoBehaviour
 
         noclimbray = Physics2D.Raycast(transform.position + Vector3.up * 2, Vector3.right, Mathf.Infinity, layer_mask);
         if (noclimbray.collider != null)
-        { 
+        {
             if (noclimbray.collider.gameObject.CompareTag("Floor") && noclimbray.collider.gameObject == collision.gameObject)
             {
                 climb = false;
@@ -326,8 +337,8 @@ public class player : MonoBehaviour
             ding = false;
         }
 
-                                        ////damage
-        
+        ////damage
+
         if (collision.gameObject.CompareTag("Enemy") && hit == false)
         {
 
@@ -338,7 +349,7 @@ public class player : MonoBehaviour
             hit = true;
             if (health <= 0f)
             {
-                                         //die
+                //die
 
                 Gravity();
                 timer = 10000000;
@@ -374,10 +385,10 @@ public class player : MonoBehaviour
             scoreT.SetText(score.ToString());
             XP += 5;
         }
-        
+
         if (XP >= XPness)
         {
-              //levelup;
+            //levelup;
             level += 1;
             levelpause = true;
             XPness = levelcalc(level);
@@ -402,10 +413,21 @@ public class player : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             if (climb == true)
-                    ding = true;
+                ding = true;
             isGrounded = false;
             climb = false;
             //Debug.Log(ding);
         }
+    }
+
+    public void Resetstats()
+    {
+
+        speed = speedbase * speedmod / 100;
+        climbspeed = climbspeedbase * speed / 10;
+        jumpForce = jumpbase * jumpmod / 100;
+        damage = damagebase * damagemod / 100;
+        firerate = fireratebase * fireratemod / 100;
+        soulgain = soulgainbase* soulgainmod / 100;
     }
 }

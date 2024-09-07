@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class boneshards : dmgdealer
 {
     GameObject playerGO;
     private player playerscript;
+    public Rigidbody2D playerrb;
     BoxCollider2D bc;
 
     float dashtime;
@@ -20,7 +22,7 @@ public class boneshards : dmgdealer
         bc = GetComponent<BoxCollider2D>();
         playerGO = GameObject.FindWithTag("Player");
         playerscript = playerGO.GetComponent<player>();
-
+        
 
 
         playerscript.dash.AddListener(Dashping);
@@ -28,7 +30,7 @@ public class boneshards : dmgdealer
 
 
         damage = playerref.damage/2;
-        dashtime = playerref.dashtime;
+        dashtime = playerref.dashtime - 0.05f;
     }
 
 
@@ -37,11 +39,22 @@ public class boneshards : dmgdealer
     {
         if (dashing == true)
         {
+            Quaternion rotato = Quaternion.Euler(0, 0, Mathf.Atan(playerrb.velocity.y / playerrb.velocity.x) * (180 / Mathf.PI));
+
+            if (playerrb.velocity.x < 0)
+            {
+                rotato = Quaternion.Euler(0, 0, Mathf.Atan(playerrb.velocity.y / playerrb.velocity.x) * (180 / Mathf.PI) + 180);
+            }
+            transform.rotation = rotato;
+
+
             transform.position = playerGO.transform.position;
             dashtimer -= Time.deltaTime;
             if (dashtimer <= 0)
             {
+
                 bc.enabled = false;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 dashing = false;
             }
         }
@@ -49,9 +62,11 @@ public class boneshards : dmgdealer
 
     public void Dashping()
     {
+        damage = playerref.damage / 2;
         bc.enabled = true;
         dashing = true;
         dashtimer = dashtime;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     private void OnTriggerEnter2D(Collider2D enemy)

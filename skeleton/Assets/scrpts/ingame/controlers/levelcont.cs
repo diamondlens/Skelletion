@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class levelcont : MonoBehaviour
@@ -15,6 +16,8 @@ public class levelcont : MonoBehaviour
     float eav;
     public float lmax;
     float lav;
+
+    public GameObject backround;
 
     bool ascheck = false;
     bool dcheck = false;
@@ -110,11 +113,9 @@ public class levelcont : MonoBehaviour
         {
             Time.timeScale = 0f;
             ding = true;
+            backround.SetActive(true);
             upgradepick1();
         }
-
-
-
     }
 
     void upgradepick1()
@@ -149,7 +150,7 @@ public class levelcont : MonoBehaviour
         if (check1 == true)
         {
             onepick.SetActive(true);
-            onepick.transform.localPosition = new Vector3(-200, 0, 0);
+            onepick.transform.localPosition = new Vector3(-200, -30, 0);
             upgradepick2();
         }
         if (check1 == false)
@@ -190,7 +191,7 @@ public class levelcont : MonoBehaviour
         if (check2 == true)
         {
             twopick.SetActive(true);
-            twopick.transform.localPosition = new Vector3(0, 0, 0);
+            twopick.transform.localPosition = new Vector3(0, -30, 0);
             upgradepick3();
         }
         if (check2 == false)
@@ -231,7 +232,7 @@ public class levelcont : MonoBehaviour
         if (check3 == true)
         {
             threepick.SetActive(true);
-            threepick.transform.localPosition = new Vector3(200, 0, 0);
+            threepick.transform.localPosition = new Vector3(200, -30, 0);
         }
         if (check3 == false)
         {
@@ -418,68 +419,68 @@ public class levelcont : MonoBehaviour
     //attack speed 
     public void Cas()
     {
-        playerref.firerate += 0.1f;
+        playerref.fireratebase += 0.1f;
         buttonpressed();
     }
     public void Ras()
     {
-        playerref.firerate += 0.3f;
+        playerref.fireratebase += 0.3f;
         buttonpressed();
     }
     public void Eas()
     {
-        playerref.firerate += 0.4f;
+        playerref.fireratebase += 0.4f;
         buttonpressed();
     }
     public void Las()
     {
-        playerref.firerate += 0.75f;
+        playerref.fireratebase += 0.75f;
         buttonpressed();
     }
 
     //damage 
     public void Cd()
     {
-        playerref.damage += 10;
+        playerref.damagebase += 10;
         buttonpressed();
     }
     public void Rd()
     {
-        playerref.damage += 15;
+        playerref.damagebase += 15;
         buttonpressed();
     }
     public void Ed()
     {
-        playerref.damage += 20;
+        playerref.damagebase += 20;
         buttonpressed();
     }
     public void Ld()
     {
-        playerref.damage += 30;
+        playerref.damagebase += 30;
         buttonpressed();
     }
 
     //jump
     public void Cj()
     {
-        playerref.jumpForce += 2;
+        playerref.jumpbase += 2;
         buttonpressed();
     }
     public void Rj()
     {
-        playerref.jumpForce += 4;
+        playerref.jumpbase += 4;
         buttonpressed();
     }
 
     //speed
     public void Rs()
     {
-        playerref.speed += 2;
+        playerref.speedbase += 2;
         buttonpressed();
     }
     public void Es()
     {
-        playerref.speed += 4;
+        playerref.speedbase += 4;
         buttonpressed();
     }
 
@@ -523,12 +524,12 @@ public class levelcont : MonoBehaviour
     //soul regen
     public void Cr()
     {
-        playerref.soulgain += 5;
+        playerref.soulgainbase += 5;
         buttonpressed();
     }
     public void Rr()
     {
-        playerref.cc += 7;
+        playerref.soulgainbase += 7;
         buttonpressed();
     }
 
@@ -580,6 +581,8 @@ public class levelcont : MonoBehaviour
 
         ding = false;
         playerref.levelpause = false;
+        playerref.Resetstats();
+        backround.SetActive(false);
     }
     //                         butttons 
 

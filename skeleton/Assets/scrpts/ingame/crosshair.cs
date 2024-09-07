@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class crosshair : MonoBehaviour
 {
-
+    public player playerref;
     public GameObject loss;
 
     Vector3 mouseposition;
@@ -17,11 +17,15 @@ public class crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mouseposition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(mouseposition.x, mouseposition.y);
-        if (loss.activeSelf == true)
+        if (playerref.levelpause == false)
         {
-            gameObject.SetActive (false);   
+            mouseposition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector3(mouseposition.x, mouseposition.y);
+            if (loss.activeSelf == true)
+            {
+                gameObject.SetActive(false);
+            }
         }
+
     }
 }

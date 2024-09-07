@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class roller : MonoBehaviour
+public class roller : enemybase
 {
-    public GameObject player;
-    public float health;
+
     public float speed;
     float speedcont;
-    Rigidbody2D m_Rigidbody;
-    public player playerref;
-    public bool miniboss = false;
-    public Enemycontroller cont;
     public float bye;
     float theta;
-    public GameObject coin;
+
 
     // Start is called before the first frame update
     void Start()
@@ -66,15 +61,26 @@ public class roller : MonoBehaviour
             }
             pain.damage = 0;
 
+
             if (health <= 0)
             {
                 if (miniboss == true)
                 {
+                    if (coinspawned == false)
+                    {
+                        GameObject clone = Instantiate(soulseed, transform.position, Quaternion.identity);
+                        clone.SetActive(true);
+                        coinspawned = true;
+                    }
                     Destroy(gameObject);
-                    //spawn chest
+                    print(health);
                 }
-                GameObject clone1 = Instantiate(coin, transform.position, Quaternion.identity);
-                clone1.SetActive(true);
+                if (coinspawned == false)
+                {
+                    GameObject clone1 = Instantiate(coin, transform.position, Quaternion.identity);
+                    clone1.SetActive(true);
+                    coinspawned = true;
+                }
                 cont.current -= 1;
                 Destroy(gameObject);
             }
