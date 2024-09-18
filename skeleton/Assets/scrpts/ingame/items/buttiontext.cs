@@ -22,7 +22,7 @@ public class buttiontext : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         text.SetActive(true);
-        text.transform.position = new Vector3(549.75f, 302.25f + 158.048f, 0);
+        text.transform.localPosition = new Vector3(0,158.048f, 0);
     }
 
     public void OnPointerExit(PointerEventData eventData)

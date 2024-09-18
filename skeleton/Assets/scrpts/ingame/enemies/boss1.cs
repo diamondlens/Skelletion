@@ -144,7 +144,7 @@ public class boss1 : MonoBehaviour
             {
                 health -= pain.damage * playerref.cd;
             }
-            pain.damage = 0;
+            pain.damage = 0; 
 
             if (health <= 0)
             {

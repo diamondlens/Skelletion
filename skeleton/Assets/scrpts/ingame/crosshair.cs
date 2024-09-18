@@ -6,7 +6,6 @@ public class crosshair : MonoBehaviour
 {
     public player playerref;
     public GameObject loss;
-
     Vector3 mouseposition;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +18,8 @@ public class crosshair : MonoBehaviour
     {
         if (playerref.levelpause == false)
         {
+
+
             mouseposition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mouseposition.x, mouseposition.y);
             if (loss.activeSelf == true)

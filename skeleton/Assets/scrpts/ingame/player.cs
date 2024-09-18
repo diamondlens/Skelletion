@@ -112,6 +112,7 @@ public class player : MonoBehaviour
         XPness = levelcalc(level);
 
         Physics2D.IgnoreLayerCollision(0, 6, false);
+        Physics2D.IgnoreLayerCollision(0, 8, false);
         Physics2D.IgnoreLayerCollision(0, 3, false);
     }
 
@@ -146,6 +147,7 @@ public class player : MonoBehaviour
             if (invertimer <= 0)
             {
                 Physics2D.IgnoreLayerCollision(0, 6, false);
+                Physics2D.IgnoreLayerCollision(0, 8, false);
                 hit = false;
             }
         }
@@ -290,6 +292,7 @@ public class player : MonoBehaviour
         //bc.enabled = false;
         Physics2D.IgnoreLayerCollision(0, 6, true);
         Physics2D.IgnoreLayerCollision(0, 3, true);
+        Physics2D.IgnoreLayerCollision(0, 8, true);
         soul -= dashcost;
         climb = false;
 
@@ -346,6 +349,7 @@ public class player : MonoBehaviour
             hp.SetText(health.ToString() + "/" + maxhealth.ToString());
             invertimer = invertime;
             Physics2D.IgnoreLayerCollision(0, 6, true);
+            Physics2D.IgnoreLayerCollision(0, 8, true);
             hit = true;
             if (health <= 0f)
             {

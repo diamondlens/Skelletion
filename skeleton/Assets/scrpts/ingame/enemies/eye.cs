@@ -12,7 +12,6 @@ public class eye : enemybase
 
     float timer = 0;
     public float spitcd;
-    public GameObject spit;
     private RaycastHit2D checkray;
     public float projectilespeed;
     public GameObject projectile;
