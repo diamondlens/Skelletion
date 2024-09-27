@@ -41,7 +41,11 @@ public class Enemycontroller : MonoBehaviour
 
     float changetimer;
     public float changemax1;
-    bool changemaxcheck = false;
+    bool changemax1check = false;
+
+
+    public float changemax2;
+    bool changemax2check = false;
 
     bool bossfight;
     public float boss1time;
@@ -101,21 +105,32 @@ public class Enemycontroller : MonoBehaviour
         }
 
 
-        if (changetimer >= changemax1 && changemaxcheck == false)
+        if (changetimer >= changemax1 && changemax1check == false)
         {
+            changemax1check = true;
+            max = 7;
+            maxtime = 3 / 4;
+        }
+
+        if (changetimer >= changemax2 && changemax2check == false)
+        {
+            changemax2check = true;
             max = 20;
             maxtime = 1 / 2;
         }
 
-
-
         if (minibosscurrent >= minibosstimer)
         {
-            theta = Random.Range(0f, 360f) * 180 / Mathf.PI;
-            spawnpos = new Vector3(player.transform.position.x + rad * Mathf.Sin(theta), player.transform.position.y + rad * Mathf.Cos(theta), 0f);
-            GameObject clone = Instantiate(chooseWTS(), spawnpos, Quaternion.identity);
-            clone.SetActive(true);
-            minibosscurrent = -100000;
+            if (wraithpool.Count > 0)
+            {
+                theta = Random.Range(0f, 360f) * 180 / Mathf.PI;
+                spawnpos = new Vector3(player.transform.position.x + rad * Mathf.Sin(theta), player.transform.position.y + rad * Mathf.Cos(theta), 0f);
+                GameObject choice = chooseWTS();
+                GameObject clone = Instantiate(choice, spawnpos, Quaternion.identity);
+                wraithpool.Remove(choice);
+                clone.SetActive(true);
+                minibosscurrent = 0;
+            }
         }
     }
 

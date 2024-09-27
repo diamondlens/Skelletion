@@ -66,7 +66,7 @@ public class player : MonoBehaviour
 
 
     float shootcd;
-    float firerate;
+    public float firerate;
     public float fireratebase;
     public float fireratemod = 100;
 
@@ -342,7 +342,7 @@ public class player : MonoBehaviour
 
         ////damage
 
-        if (collision.gameObject.CompareTag("Enemy") && hit == false)
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Enemyproj")  && hit == false)
         {
 
             health = health - 1f;
@@ -432,6 +432,7 @@ public class player : MonoBehaviour
         jumpForce = jumpbase * jumpmod / 100;
         damage = damagebase * damagemod / 100;
         firerate = fireratebase * fireratemod / 100;
-        soulgain = soulgainbase* soulgainmod / 100;
+        soulgain = soulgainbase * soulgainmod / 100;
+        dashcost = 10 + soulgain;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class boss1 : MonoBehaviour
+public class boss1 : enemybase
 {
     public spikeshooter spikeshooter;
 
@@ -13,13 +13,10 @@ public class boss1 : MonoBehaviour
     UnityEngine.AI.NavMeshAgent agent;
 
     private RaycastHit2D checkray;
-    public GameObject player;
-    public player playerref;
 
     public boss bosscont;
 
     public float maxhp;
-    float health;
 
     public float spikecd;
     float spiketimer;

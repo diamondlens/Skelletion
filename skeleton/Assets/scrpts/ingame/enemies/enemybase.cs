@@ -61,7 +61,7 @@ public class enemybase : MonoBehaviour
                         coinspawned = true;
                     }
                     Destroy(gameObject);
-                    print(health);
+                    //print(health);
                 }
                 if (coinspawned == false)
                 {
