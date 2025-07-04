@@ -42,8 +42,6 @@ public class missle : enemybase
             agent.velocity = new Vector3(agent.velocity.x, -agent.velocity.y, 0);   
 
         }
-
-
     }
 
 
